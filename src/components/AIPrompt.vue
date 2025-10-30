@@ -1,6 +1,6 @@
 <script setup>
   import { io } from "socket.io-client";
-  import { ref, onBeforeUnmount } from "vue";
+  import { ref, onBeforeUnmount, reactive, onMounted } from "vue";
 
   import AskButton from "./AskButton/AskButton.vue";
   import RagResponse from "./AskButton/RAGResponse.vue";
@@ -9,15 +9,8 @@
   import DocumentReviewButton from "./DocumentReviewButton/DocumentReviewButton.vue";
   import DocumentReviewModal from "./DocumentReviewButton/DocumentReviewModal.vue";
 
-  const RAG_API_URL = "http://localhost:3000/ragExample/callRagAi";
-
-  let socket = io("http://localhost:3001/ragAiChat", {
-    transports: ["websocket"], // optional: force WebSocket
-    reconnection: true,
-    reconnectionAttempts: Infinity,
-    timeout: 60000,
-    autoConnect:true
-  });
+  //This needs to go into a config file later.
+  const RAG_API_URL = "http://localhost:3001/ragAiChat";
 
   defineProps({
     msg: String 
@@ -30,6 +23,23 @@
   const showAboutModal = ref(false);
   const responseLoading = ref(true);
   
+  const userId = crypto.randomUUID();
+  const tabId = crypto.randomUUID();
+
+  console.log(userId);
+
+  const socket = io(RAG_API_URL, {
+    transports: ["websocket"], // optional: force WebSocket
+    reconnection: true,
+    reconnectionAttempts: Infinity,
+    timeout: 60000,
+    autoConnect:true,
+    query:{
+      userId:userId,
+      tabId:tabId
+    }
+  });
+
   onBeforeUnmount(()=>{
     socket.emit("close_rag_ai");
   })
@@ -42,6 +52,7 @@
     showDownloadDocumentModal.value = false;
 
     socket.emit("sendMessage", {
+        sessionId:crypto.randomUUID(),
         question:question.value
     });
   };
