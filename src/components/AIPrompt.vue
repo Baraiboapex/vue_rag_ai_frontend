@@ -9,8 +9,7 @@
   import DocumentReviewButton from "./DocumentReviewButton/DocumentReviewButton.vue";
   import DocumentReviewModal from "./DocumentReviewButton/DocumentReviewModal.vue";
 
-  //This needs to go into a config file later.
-  const RAG_API_URL = "http://localhost:8081/ragAiChat";
+  const RAG_API_URL = import.meta.env.VITE_VUE_APP_DEV_RAG_API_URL;
 
   defineProps({
     msg: String 
