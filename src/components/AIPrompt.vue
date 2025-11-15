@@ -10,7 +10,7 @@
   import DocumentReviewModal from "./DocumentReviewButton/DocumentReviewModal.vue";
 
   //This needs to go into a config file later.
-  const RAG_API_URL = "http://localhost:3001/ragAiChat";
+  const RAG_API_URL = "http://localhost:8081/ragAiChat";
 
   defineProps({
     msg: String 
