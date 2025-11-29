@@ -9,7 +9,7 @@
   import DocumentReviewButton from "./DocumentReviewButton/DocumentReviewButton.vue";
   import DocumentReviewModal from "./DocumentReviewButton/DocumentReviewModal.vue";
 
-  const RAG_API_URL = import.meta.env.VITE_VUE_APP_DEV_RAG_API_URL;
+  const RAG_API_URL = import.meta.env.VITE_VUE_APP_LIVE_API_URL;
 
   defineProps({
     msg: String 
